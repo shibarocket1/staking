@@ -93,6 +93,7 @@ contract stakeShibaV1 is Initializable {
     mapping(uint256 => uint256) updatedTime;
     uint256 public totalStaked;
     uint256 public totalClaimed;
+    uint256 public stakersLimit;
     
     event NewStake(uint256 amount, address staker, uint256 package);
 
@@ -105,9 +106,10 @@ contract stakeShibaV1 is Initializable {
         stakingAPYs[0] = apy0; // 100 = 1% or 10 = 0.1% or 1 = 0.01%
         stakingAPYs[1] = apy1;
         stakingAPYs[2] = apy2;
-        packages[0] = 1000000 ether;
-        packages[1] = 2500000 ether;
-        packages[2] = 5000000 ether;
+        stakersLimit = 1000;
+        packages[0] = 100000 ether;
+        packages[1] = 250000 ether;
+        packages[2] = 500000 ether;
     }
     
     modifier onlyOwner() {
@@ -127,6 +129,7 @@ contract stakeShibaV1 is Initializable {
      */
     function StakeAmount(uint _package) public{
         require(_package <= 2, 'Invalid Staking Package');
+        require(stakersLimit > activeStakers,"Staking Limit Exceeded");
         require(!stakers[msg.sender].status,"Already staked with this account");
         
         // Stake Brownce
@@ -230,6 +233,7 @@ contract stakeShibaV1 is Initializable {
         stakers[msg.sender].status = false;
         stakers[msg.sender].stakedAmount = 0;
         stakers[msg.sender].package = 0;
+        activeStakers--;
     }
     
     function calculatePerDayRewards(uint256 amount, uint256 stakePlan) public view returns(uint256){
@@ -246,9 +250,16 @@ contract stakeShibaV1 is Initializable {
         _token.safeTransfer(msg.sender, amount);
     }
     
-    function changeLastRewardTime(uint256 _lastrewardTime) public onlyOwner{
-        stakers[msg.sender].lastRewardTime = _lastrewardTime;
-    }
+    //For Testing Purpose
+    // function changeLastRewardTime(uint256 _lastrewardTime) public onlyOwner{
+    //     stakers[msg.sender].lastRewardTime = _lastrewardTime;
+    // }
+
+    function changeStakersLimit(uint256 _limit) public onlyOwner{
+        require(_limit > 0,"Stakers Limit Must Be greater than 0");
+        stakersLimit = _limit;
+    }    
+
     function currentTimestamp() public view returns(uint256){
         return block.timestamp;
     }
