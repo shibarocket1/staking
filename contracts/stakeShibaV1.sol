@@ -103,9 +103,14 @@ contract stakeShibaV1 is Initializable {
         updatedTime[0] = block.timestamp;
         updatedTime[1] = block.timestamp;
         updatedTime[2] = block.timestamp;
-        stakingAPYs[0] = apy0; // 100 = 1% or 10 = 0.1% or 1 = 0.01%
-        stakingAPYs[1] = apy1;
-        stakingAPYs[2] = apy2;
+        
+        // 100 = 1% or 10 = 0.1% or 1 = 0.01% 
+        
+        stakingAPYs[0] = apy0; // APY Percentage in UINT for Package 1 
+        stakingAPYs[1] = apy1; // APY Percentage in UINT for Package 2
+        stakingAPYs[2] = apy2; // APY Percentage in UINT for Package 3
+        
+
         stakersLimit = 1000;
         packages[0] = 100000 ether;
         packages[1] = 250000 ether;
@@ -205,6 +210,7 @@ contract stakeShibaV1 is Initializable {
         * if staking apy event occurs between staking period
      **/
     function claimRewards() public{
+        require(msg.sender == tx.origin, 'Invalid Request');
         require(stakers[msg.sender].status, 'You are not a staker');
         require(block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days) > 0,'Already Claimed Today');
         uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]).div(10000).div(365);
@@ -221,15 +227,29 @@ contract stakeShibaV1 is Initializable {
         
         _token.safeTransfer(msg.sender,claimableReward);
         
-        stakers[msg.sender].lastRewardTime += (claimableDays) * 1 days;
+        stakers[msg.sender].lastRewardTime += block.timestamp;
         stakers[msg.sender].claimed += claimableReward;
         
     }
     
     function endStake() public{
+        require(msg.sender == tx.origin, 'Invalid Request');
         require(stakers[msg.sender].status, 'You are not a staker');
-        require(block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days) == 0,'Please claim all rewards before ending the staking');
-        _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount);
+        uint256 claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
+        uint256 claimableReward = 0;
+        if(claimableDays > 0){
+            if(stakers[msg.sender].lastRewardTime < updatedTime[stakers[msg.sender].package - 1]){
+                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+            }
+            uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]).div(10000).div(365);
+            claimableReward = perDayReward.mul(claimableDays);
+            require(claimableReward < RemainingRewardsPot(), 'Reward Pot is empty');
+            
+            stakers[msg.sender].lastRewardTime += block.timestamp;
+            stakers[msg.sender].claimed += claimableReward;
+        }
+        _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount+claimableReward);
+        totalStaked -= stakers[msg.sender].stakedAmount;
         stakers[msg.sender].status = false;
         stakers[msg.sender].stakedAmount = 0;
         stakers[msg.sender].package = 0;
