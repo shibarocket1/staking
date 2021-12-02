@@ -74,6 +74,11 @@
       "address": "0x02BC15839a1ed0Dfb3e80e941483681669189B81",
       "txHash": "0x0d67efb5f57d2f048b4de98779f1229c8e82972fe1ea3ad62d27a3c3d4bcff9a",
       "kind": "transparent"
+    },
+    {
+      "address": "0x5CeDd8DBd4dD316716aA88A9Eb49a9F15A65052C",
+      "txHash": "0x1f5e2cc4d7174057f970d0daa35f7d5360e82c50a7958026abfb63a9ac752b75",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -1639,6 +1644,131 @@
             "label": "totalClaimed",
             "type": "t_uint256",
             "src": "contracts/stakeShibaV1.sol:95"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_struct(data)793_storage)": {
+            "label": "mapping(address => struct Staker.data)"
+          },
+          "t_struct(data)793_storage": {
+            "label": "struct Staker.data",
+            "members": [
+              {
+                "label": "stakedAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "package",
+                "type": "t_uint256"
+              },
+              {
+                "label": "lastRewardTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          }
+        }
+      }
+    },
+    "80bae64e49767b3a20d55447d78b451dadcf448865fd6fb1378611ae7e860d68": {
+      "address": "0x57d3fE5396DB350bac928Eb20Af97c9baA71dB6D",
+      "txHash": "0x027d199752024c058f976625ffa4e496f8f1213aeb44da15ed35f1b80424c33f",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "_token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV1.sol:86"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "activeStakers",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:88"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/stakeShibaV1.sol:89"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_struct(data)793_storage)",
+            "src": "contracts/stakeShibaV1.sol:90"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "stakingAPYs",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV1.sol:91"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "packages",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV1.sol:92"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "updatedTime",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV1.sol:93"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:94"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "totalClaimed",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:95"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "stakersLimit",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:96"
           }
         ],
         "types": {

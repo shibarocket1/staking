@@ -3,7 +3,29 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+interface IvotingTokens{
+    function balanceOf(
+        address account
+    ) external view returns (uint256);
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
+    function transfer(
+        address recipient,
+        uint256 amount
+    ) external returns (bool);
+    function burn(
+        uint256 amount
+    ) external returns (bool);
+    function mint(
+        address account,
+        uint256 amount
+    ) external returns (bool);
+}
 
 /**
  * @dev A token holder contract that will allow a beneficiary to extract the
@@ -84,6 +106,7 @@ contract stakeShibaV1 is Initializable {
 
     // ERC20 basic token contract being held
     IERC20Upgradeable private  _token;
+    IvotingTokens private _votingToken;
     
     uint private activeStakers;
     address private owner;
@@ -97,8 +120,9 @@ contract stakeShibaV1 is Initializable {
     
     event NewStake(uint256 amount, address staker, uint256 package);
 
-    function initialize(IERC20Upgradeable token_, uint256 apy0, uint256 apy1, uint256 apy2) public initializer  {
+    function initialize(IERC20Upgradeable token_, IvotingTokens voteToken_, uint256 apy0, uint256 apy1, uint256 apy2) public initializer  {
         _token = token_;
+        _votingToken = voteToken_;
         owner = msg.sender;
         updatedTime[0] = block.timestamp;
         updatedTime[1] = block.timestamp;
@@ -127,6 +151,13 @@ contract stakeShibaV1 is Initializable {
      */
     function token() public view virtual returns (IERC20Upgradeable) {
         return _token;
+    }
+
+    /**
+     * @return the voting token being held.
+     */
+    function votingToken() public view virtual returns (IvotingTokens) {
+        return _votingToken;
     }
     
     /**
@@ -159,6 +190,7 @@ contract stakeShibaV1 is Initializable {
         
         totalStaked += packages[0];
         token().safeTransferFrom(msg.sender, address(this), packages[0]);
+        votingToken().mint(msg.sender,packages[0]);
         
         activeStakers++;
         emit NewStake(packages[0],msg.sender,1);
@@ -172,6 +204,7 @@ contract stakeShibaV1 is Initializable {
         
         totalStaked += packages[1];
         token().safeTransferFrom(msg.sender, address(this), packages[1]);
+        votingToken().mint(msg.sender,packages[1]);
         
         activeStakers++;
         emit NewStake(packages[1],msg.sender,2);
@@ -185,6 +218,7 @@ contract stakeShibaV1 is Initializable {
         
         totalStaked += packages[2];
         token().safeTransferFrom(msg.sender, address(this), packages[2]);
+        votingToken().mint(msg.sender,packages[2]);
         
         activeStakers++;
         emit NewStake(packages[2],msg.sender,3);
@@ -235,6 +269,7 @@ contract stakeShibaV1 is Initializable {
     function endStake() public{
         require(msg.sender == tx.origin, 'Invalid Request');
         require(stakers[msg.sender].status, 'You are not a staker');
+        require(votingToken().balanceOf(msg.sender) >= stakers[msg.sender].stakedAmount, 'You must have equal voting tokens to end the stake');
         uint256 claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
         uint256 claimableReward = 0;
         if(claimableDays > 0){
@@ -248,7 +283,9 @@ contract stakeShibaV1 is Initializable {
             stakers[msg.sender].lastRewardTime += block.timestamp;
             stakers[msg.sender].claimed += claimableReward;
         }
+        votingToken().transferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount+claimableReward);
+        votingToken().burn(stakers[msg.sender].stakedAmount);
         totalStaked -= stakers[msg.sender].stakedAmount;
         stakers[msg.sender].status = false;
         stakers[msg.sender].stakedAmount = 0;
