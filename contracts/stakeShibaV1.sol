@@ -278,12 +278,25 @@ contract stakeShibaV1 is Initializable {
             uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]).div(10000).div(365);
             claimableReward = perDayReward.mul(claimableDays);
             require(claimableReward < RemainingRewardsPot(), 'Reward Pot is empty');
-            
-            stakers[msg.sender].lastRewardTime += block.timestamp;
-            stakers[msg.sender].claimed += claimableReward;
         }
         votingToken().transferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount+claimableReward);
+        votingToken().burn(stakers[msg.sender].stakedAmount);
+        stakers[msg.sender].lastRewardTime += block.timestamp;
+        stakers[msg.sender].claimed += claimableReward;
+        totalStaked -= stakers[msg.sender].stakedAmount;
+        stakers[msg.sender].status = false;
+        stakers[msg.sender].stakedAmount = 0;
+        stakers[msg.sender].package = 0;
+        activeStakers--;
+    }
+
+    function emergencyEndstake() public{
+        require(msg.sender == tx.origin, 'Invalid Request');
+        require(stakers[msg.sender].status, 'You are not a staker');
+        require(votingToken().balanceOf(msg.sender) >= stakers[msg.sender].stakedAmount, 'You must have equal voting tokens to end the stake');
+        votingToken().transferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
+        _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount);
         votingToken().burn(stakers[msg.sender].stakedAmount);
         totalStaked -= stakers[msg.sender].stakedAmount;
         stakers[msg.sender].status = false;
@@ -306,8 +319,7 @@ contract stakeShibaV1 is Initializable {
         _token.safeTransfer(msg.sender, amount);
     }
 
-    function setVotingToken(address vToken_) public onlyOwner {
-        require(vToken_ != address(0), 'Invalid Voting Token Address');
+    function setVotingToken(IvotingTokens vToken_) public onlyOwner {
         _votingToken = vToken_;
     }
     
