@@ -120,9 +120,8 @@ contract stakeShibaV1 is Initializable {
     
     event NewStake(uint256 amount, address staker, uint256 package);
 
-    function initialize(IERC20Upgradeable token_, IvotingTokens voteToken_, uint256 apy0, uint256 apy1, uint256 apy2) public initializer  {
+    function initialize(IERC20Upgradeable token_, uint256 apy0, uint256 apy1, uint256 apy2) public initializer  {
         _token = token_;
-        _votingToken = voteToken_;
         owner = msg.sender;
         updatedTime[0] = block.timestamp;
         updatedTime[1] = block.timestamp;
@@ -305,6 +304,11 @@ contract stakeShibaV1 is Initializable {
     function withdrawRewardsPot(uint256 amount) public onlyOwner {
         require(amount < RemainingRewardsPot(), 'Insufficient funds in RewardPot');
         _token.safeTransfer(msg.sender, amount);
+    }
+
+    function setVotingToken(address vToken_) public onlyOwner {
+        require(vToken_ != address(0), 'Invalid Voting Token Address');
+        _votingToken = vToken_;
     }
     
     //For Testing Purpose
