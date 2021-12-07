@@ -17,7 +17,7 @@ async function main() {
   const shiba = await hre.ethers.getContractFactory("stakeShibaV1");
   
   //Testing on demo token
-  const greeter = await upgrades.deployProxy(shiba,["0xB1c97C98F79504Ce362d7D41C402E0936D3E2435",1000,1500,2500],{initializer: 'initialize'});
+  const greeter = await upgrades.deployProxy(shiba,["0x782d8c5c0150bedc70d94fe6737763ede839f205",1000,1500,2500],{initializer: 'initialize'});
   await greeter.deployed();
 
   console.log("Contract deployed to:", greeter.address);

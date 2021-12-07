@@ -49,6 +49,11 @@
       "address": "0x79B51129dc20ce763641B79E9F0e2A82EF860821",
       "txHash": "0xa6d58cb87add0e5928b76cac1c0c00813f5df8480f9e8d8a4b250a0c38c8dad6",
       "kind": "transparent"
+    },
+    {
+      "address": "0x18447D9e200b493F43634320CED4b8e837AC5B4d",
+      "txHash": "0x47490e5dd6e5fb6d65c81954ee65ad4c2187490a37179de5b64432f8c2853b94",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -972,6 +977,140 @@
           },
           "t_mapping(t_address,t_mapping(t_address,t_mapping(t_uint256,t_uint256)))": {
             "label": "mapping(address => mapping(address => mapping(uint256 => uint256)))"
+          }
+        }
+      }
+    },
+    "401ca55cfd455d7a913f80aaa2d8cb982e6dd5fef7d88ad468b517cb3c0c3e7c": {
+      "address": "0x245F523F350a2098014b3fc6C73307026c367dc3",
+      "txHash": "0x948006fb59890d9ff61e7c3f7a5b48a9819e2b9f664be5af01adeb833c840384",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "_token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV1.sol:108"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "_votingToken",
+            "type": "t_contract(IvotingTokens)641",
+            "src": "contracts/stakeShibaV1.sol:109"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "activeStakers",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:111"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/stakeShibaV1.sol:112"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_struct(data)838_storage)",
+            "src": "contracts/stakeShibaV1.sol:113"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "stakingAPYs",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV1.sol:114"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "packages",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV1.sol:115"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "updatedTime",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV1.sol:116"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:117"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "totalClaimed",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:118"
+          },
+          {
+            "contract": "stakeShibaV1",
+            "label": "stakersLimit",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV1.sol:119"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IvotingTokens)641": {
+            "label": "contract IvotingTokens"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_struct(data)838_storage)": {
+            "label": "mapping(address => struct Staker.data)"
+          },
+          "t_struct(data)838_storage": {
+            "label": "struct Staker.data",
+            "members": [
+              {
+                "label": "stakedAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "package",
+                "type": "t_uint256"
+              },
+              {
+                "label": "lastRewardTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
           }
         }
       }
