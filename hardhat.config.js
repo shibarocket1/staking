@@ -34,16 +34,18 @@ module.exports = {
     //   accounts: [""],
     //   gasPrice: 20000000000
     // },
-    BSC_test: {
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
-      chainId:97,
-      accounts: [""]
-    },
-    // BSC: {
-    //   url: "https://bsc-dataseed.binance.org/",
-    //   chainId: 56,
+    // BSC_test: {
+    //   url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    //   chainId:97,
     //   accounts: [""]
-    // }
+    // },
+    BSC: {
+      url: "https://bsc-dataseed.binance.org/",
+      chainId: 56,
+      accounts: [""],
+      gas: 2100000,
+      gasPrice: 5000000000
+    }
   },
   etherscan: {
     // Your API key for Etherscan

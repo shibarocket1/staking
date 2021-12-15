@@ -99,7 +99,7 @@ library Staker{
     }
  }
 
-contract stakeShibaV1 is Initializable {
+contract stakeShibaV4 is Initializable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     using Staker for Staker.data;
     using SafeMath for uint256;
@@ -231,7 +231,11 @@ contract stakeShibaV1 is Initializable {
         if(stakee.lastRewardTime > updatedTime[stakee.package - 1]){
             claimableDays = block.timestamp.sub(stakee.lastRewardTime).div(1 days);
         }else{
-            claimableDays = block.timestamp.sub(updatedTime[stakee.package - 1]).div(1 days);
+            if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
+                claimableDays = updatedTime[stakers[msg.sender].package - 1].sub(stakers[msg.sender].lastRewardTime).div(1 days);
+            }else{
+                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+            }
         }
         uint256 claimableReward = perDayReward.mul(claimableDays);
         return (claimableDays,claimableReward);
@@ -252,7 +256,11 @@ contract stakeShibaV1 is Initializable {
         if(stakers[msg.sender].lastRewardTime > updatedTime[stakers[msg.sender].package - 1]){
             claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
         }else{
-            claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+            if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
+                claimableDays = updatedTime[stakers[msg.sender].package - 1].sub(stakers[msg.sender].lastRewardTime).div(1 days);
+            }else{
+                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+            }
         }
         
         uint256 claimableReward = perDayReward.mul(claimableDays);
@@ -260,7 +268,7 @@ contract stakeShibaV1 is Initializable {
         
         _token.safeTransfer(msg.sender,claimableReward);
         
-        stakers[msg.sender].lastRewardTime += block.timestamp;
+        stakers[msg.sender].lastRewardTime = block.timestamp;
         stakers[msg.sender].claimed += claimableReward;
         totalClaimed += claimableReward;
         
@@ -274,16 +282,20 @@ contract stakeShibaV1 is Initializable {
         uint256 claimableReward = 0;
         if(claimableDays > 0){
             if(stakers[msg.sender].lastRewardTime < updatedTime[stakers[msg.sender].package - 1]){
-                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+                if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
+                    claimableDays = updatedTime[stakers[msg.sender].package - 1].sub(stakers[msg.sender].lastRewardTime).div(1 days);
+                }else{
+                    claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+                }
             }
-            uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]).div(10000).div(365);
+            uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]-1).div(10000).div(365);
             claimableReward = perDayReward.mul(claimableDays);
             require(claimableReward < RemainingRewardsPot(), 'Reward Pot is empty');
         }
         votingToken().transferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount+claimableReward);
         votingToken().burn(stakers[msg.sender].stakedAmount);
-        stakers[msg.sender].lastRewardTime += block.timestamp;
+        stakers[msg.sender].lastRewardTime = block.timestamp;
         stakers[msg.sender].claimed += claimableReward;
         totalClaimed += claimableReward;
         totalStaked -= stakers[msg.sender].stakedAmount;
@@ -338,6 +350,10 @@ contract stakeShibaV1 is Initializable {
     function currentTimestamp() public view returns(uint256){
         return block.timestamp;
     }
+
+    function cT() public view returns(uint256){
+        return 123;
+    }
     
     /**
      * Change APY Functions:
@@ -361,4 +377,4 @@ contract stakeShibaV1 is Initializable {
         stakingAPYs[2] = newAPY;
         updatedTime[2] = _updatedTime;
     }
-}
+} 
