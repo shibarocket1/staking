@@ -117,6 +117,7 @@ contract stakeShibaV4 is Initializable {
     uint256 public totalStaked;
     uint256 public totalClaimed;
     uint256 public stakersLimit;
+    IERC20Upgradeable private _safeVotingToken;
     
     event NewStake(uint256 amount, address staker, uint256 package);
 
@@ -157,6 +158,10 @@ contract stakeShibaV4 is Initializable {
      */
     function votingToken() public view virtual returns (IvotingTokens) {
         return _votingToken;
+    }
+
+    function safeVotingToken() public view virtual returns (IERC20Upgradeable) {
+        return _safeVotingToken;
     }
     
     /**
@@ -292,7 +297,7 @@ contract stakeShibaV4 is Initializable {
             claimableReward = perDayReward.mul(claimableDays);
             require(claimableReward < RemainingRewardsPot(), 'Reward Pot is empty');
         }
-        votingToken().transferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
+        safeVotingToken().safeTransferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount+claimableReward);
         votingToken().burn(stakers[msg.sender].stakedAmount);
         stakers[msg.sender].lastRewardTime = block.timestamp;
@@ -309,7 +314,7 @@ contract stakeShibaV4 is Initializable {
         require(msg.sender == tx.origin, 'Invalid Request');
         require(stakers[msg.sender].status, 'You are not a staker');
         require(votingToken().balanceOf(msg.sender) >= stakers[msg.sender].stakedAmount, 'You must have equal voting tokens to end the stake');
-        votingToken().transferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
+        safeVotingToken().safeTransferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount);
         votingToken().burn(stakers[msg.sender].stakedAmount);
         totalStaked -= stakers[msg.sender].stakedAmount;
@@ -335,6 +340,10 @@ contract stakeShibaV4 is Initializable {
 
     function setVotingToken(IvotingTokens vToken_) public onlyOwner {
         _votingToken = vToken_;
+    }
+
+    function setSafeVotingToken(IERC20Upgradeable vToken_) public onlyOwner {
+        _safeVotingToken = vToken_;
     }
     
     //For Testing Purpose
@@ -377,4 +386,4 @@ contract stakeShibaV4 is Initializable {
         stakingAPYs[2] = newAPY;
         updatedTime[2] = _updatedTime;
     }
-} 
+}
