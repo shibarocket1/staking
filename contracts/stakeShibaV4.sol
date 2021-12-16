@@ -237,9 +237,9 @@ contract stakeShibaV4 is Initializable {
             claimableDays = block.timestamp.sub(stakee.lastRewardTime).div(1 days);
         }else{
             if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
-                claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
+                claimableDays = 0;
             }else{
-                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+                claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
             }
         }
         uint256 claimableReward = perDayReward.mul(claimableDays);
@@ -262,10 +262,10 @@ contract stakeShibaV4 is Initializable {
             claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
         }else{
             if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
-                claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
-            }else{
-                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
-            }
+                    claimableDays = 0;
+                }else{
+                    claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
+                }
         }
         
         uint256 claimableReward = perDayReward.mul(claimableDays);
@@ -288,9 +288,9 @@ contract stakeShibaV4 is Initializable {
         if(claimableDays > 0){
             if(stakers[msg.sender].lastRewardTime < updatedTime[stakers[msg.sender].package - 1]){
                 if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
-                    claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
+                    claimableDays = 0;
                 }else{
-                    claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
+                    claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
                 }
             }
             uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]-1).div(10000).div(365);
