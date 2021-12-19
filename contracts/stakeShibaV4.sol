@@ -99,7 +99,7 @@ library Staker{
     }
  }
 
-contract stakeShibaV4 is Initializable {
+contract stakeShibaV6 is Initializable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     using Staker for Staker.data;
     using SafeMath for uint256;
@@ -231,7 +231,7 @@ contract stakeShibaV4 is Initializable {
     function checkRewards() public view returns(uint256, uint256){
         require(stakers[msg.sender].status,'You are not a staker');
         Staker.data memory stakee = stakers[msg.sender];
-        uint256 perDayReward = stakee.stakedAmount.mul(stakingAPYs[stakee.package]).div(10000).div(365);
+        uint256 perDayReward = stakee.stakedAmount.mul(stakingAPYs[stakee.package-1]).div(10000).div(365);
         uint256 claimableDays;
         if(stakee.lastRewardTime > updatedTime[stakee.package - 1]){
             claimableDays = block.timestamp.sub(stakee.lastRewardTime).div(1 days);
@@ -240,6 +240,24 @@ contract stakeShibaV4 is Initializable {
                 claimableDays = 0;
             }else{
                 claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
+            }
+        }
+        uint256 claimableReward = perDayReward.mul(claimableDays);
+        return (claimableDays,claimableReward);
+    }
+
+    function showRewards(address _stake) public view returns(uint256, uint256){
+        require(stakers[_stake].status,'You are not a staker');
+        Staker.data memory stakee = stakers[_stake];
+        uint256 perDayReward = stakee.stakedAmount.mul(stakingAPYs[stakee.package-1]).div(10000).div(365);
+        uint256 claimableDays;
+        if(stakee.lastRewardTime > updatedTime[stakee.package - 1]){
+            claimableDays = block.timestamp.sub(stakee.lastRewardTime).div(1 days);
+        }else{
+            if(updatedTime[stakers[_stake].package-1] > block.timestamp){
+                claimableDays = 0;
+            }else{
+                claimableDays = block.timestamp.sub(stakers[_stake].lastRewardTime).div(1 days);
             }
         }
         uint256 claimableReward = perDayReward.mul(claimableDays);
@@ -255,7 +273,7 @@ contract stakeShibaV4 is Initializable {
         require(msg.sender == tx.origin, 'Invalid Request');
         require(stakers[msg.sender].status, 'You are not a staker');
         require(block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days) > 0,'Already Claimed Today');
-        uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]).div(10000).div(365);
+        uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package-1]).div(10000).div(365);
         uint256 claimableDays;
         
         if(stakers[msg.sender].lastRewardTime > updatedTime[stakers[msg.sender].package - 1]){
@@ -292,7 +310,7 @@ contract stakeShibaV4 is Initializable {
                     claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
                 }
             }
-            uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package]-1).div(10000).div(365);
+            uint256 perDayReward = stakers[msg.sender].stakedAmount.mul(stakingAPYs[stakers[msg.sender].package-1]).div(10000).div(365);
             claimableReward = perDayReward.mul(claimableDays);
             require(claimableReward < RemainingRewardsPot(), 'Reward Pot is empty');
         }
@@ -300,14 +318,14 @@ contract stakeShibaV4 is Initializable {
         stakers[msg.sender].claimed += claimableReward;
         totalClaimed += claimableReward;
         totalStaked -= stakers[msg.sender].stakedAmount;
-        stakers[msg.sender].status = false;
-        stakers[msg.sender].stakedAmount = 0;
-        stakers[msg.sender].package = 0;
+        
         activeStakers--;
         safeVotingToken().safeTransferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount+claimableReward);
         votingToken().burn(stakers[msg.sender].stakedAmount);
-        
+        stakers[msg.sender].status = false;
+        stakers[msg.sender].stakedAmount = 0;
+        stakers[msg.sender].package = 0;
     }
 
     function emergencyEndstake() public{
@@ -315,14 +333,14 @@ contract stakeShibaV4 is Initializable {
         require(stakers[msg.sender].status, 'You are not a staker');
         require(votingToken().balanceOf(msg.sender) >= stakers[msg.sender].stakedAmount, 'You must have equal voting tokens to end the stake');
         totalStaked -= stakers[msg.sender].stakedAmount;
-        stakers[msg.sender].status = false;
-        stakers[msg.sender].stakedAmount = 0;
-        stakers[msg.sender].package = 0;
+        
         activeStakers--;
         safeVotingToken().safeTransferFrom(msg.sender, address(this), stakers[msg.sender].stakedAmount);
         _token.safeTransfer(msg.sender, stakers[msg.sender].stakedAmount);
         votingToken().burn(stakers[msg.sender].stakedAmount);
-        
+        stakers[msg.sender].status = false;
+        stakers[msg.sender].stakedAmount = 0;
+        stakers[msg.sender].package = 0;
     }
     
     function calculatePerDayRewards(uint256 amount, uint256 stakePlan) public view returns(uint256){

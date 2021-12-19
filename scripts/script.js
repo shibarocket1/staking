@@ -14,7 +14,7 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const shiba = await hre.ethers.getContractFactory("stakeShibaV4");
+  const shiba = await hre.ethers.getContractFactory("stakeShibaV6");
   
   //Testing on demo token
   //const greeter = await upgrades.deployProxy(shiba,["0x782d8c5c0150bedc70d94fe6737763ede839f205",1000,1500,2500],{initializer: 'initialize'});

@@ -328,70 +328,490 @@
             "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV3",
+            "label": "_token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV2.sol:108"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "_votingToken",
+            "type": "t_contract(IvotingTokens)2160",
+            "src": "contracts/stakeShibaV2.sol:109"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "activeStakers",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV2.sol:111"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/stakeShibaV2.sol:112"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_struct(data)2357_storage)",
+            "src": "contracts/stakeShibaV2.sol:113"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "stakingAPYs",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV2.sol:114"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "packages",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV2.sol:115"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "updatedTime",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV2.sol:116"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV2.sol:117"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "totalClaimed",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV2.sol:118"
+          },
+          {
+            "contract": "stakeShibaV3",
+            "label": "stakersLimit",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV2.sol:119"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IvotingTokens)2160": {
+            "label": "contract IvotingTokens"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_struct(data)2357_storage)": {
+            "label": "mapping(address => struct Staker.data)"
+          },
+          "t_struct(data)2357_storage": {
+            "label": "struct Staker.data",
+            "members": [
+              {
+                "label": "stakedAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "package",
+                "type": "t_uint256"
+              },
+              {
+                "label": "lastRewardTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          }
+        }
+      }
+    },
+    "5d12122dc1034c7f6f30be4ef7ec96a38b57b161dea914d371cc381b081e1ae0": {
+      "address": "0xb8eE1f5c5df881f1CC77949C674e33aa73Ba8659",
+      "txHash": "0x3f79a9114f7a474175a561689d0105e59b4159fb04352c8389c34c24500b3584",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "stakeShibaV5",
             "label": "_token",
             "type": "t_contract(IERC20Upgradeable)123",
             "src": "contracts/stakeShibaV4.sol:108"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "_votingToken",
             "type": "t_contract(IvotingTokens)3687",
             "src": "contracts/stakeShibaV4.sol:109"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "activeStakers",
             "type": "t_uint256",
             "src": "contracts/stakeShibaV4.sol:111"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "owner",
             "type": "t_address",
             "src": "contracts/stakeShibaV4.sol:112"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "stakers",
             "type": "t_mapping(t_address,t_struct(data)3884_storage)",
             "src": "contracts/stakeShibaV4.sol:113"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "stakingAPYs",
             "type": "t_mapping(t_uint256,t_uint256)",
             "src": "contracts/stakeShibaV4.sol:114"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "packages",
             "type": "t_mapping(t_uint256,t_uint256)",
             "src": "contracts/stakeShibaV4.sol:115"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "updatedTime",
             "type": "t_mapping(t_uint256,t_uint256)",
             "src": "contracts/stakeShibaV4.sol:116"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "totalStaked",
             "type": "t_uint256",
             "src": "contracts/stakeShibaV4.sol:117"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "totalClaimed",
             "type": "t_uint256",
             "src": "contracts/stakeShibaV4.sol:118"
           },
           {
-            "contract": "stakeShibaV4",
+            "contract": "stakeShibaV5",
             "label": "stakersLimit",
             "type": "t_uint256",
             "src": "contracts/stakeShibaV4.sol:119"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "_safeVotingToken",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:120"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IvotingTokens)3687": {
+            "label": "contract IvotingTokens"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_struct(data)3884_storage)": {
+            "label": "mapping(address => struct Staker.data)"
+          },
+          "t_struct(data)3884_storage": {
+            "label": "struct Staker.data",
+            "members": [
+              {
+                "label": "stakedAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "package",
+                "type": "t_uint256"
+              },
+              {
+                "label": "lastRewardTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          }
+        }
+      }
+    },
+    "f174369948b3f2a58e647381afefe2b1778a6b8caaa2174867f99a245a41cfee": {
+      "address": "0xEF27C9907F97C14a3Df2F0Edb6dC61259156AceF",
+      "txHash": "0xee95ffdb7c3f158bec46ac4d3121f34430fa2782429f0dfb32aea20e54a42504",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "_token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:108"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "_votingToken",
+            "type": "t_contract(IvotingTokens)3687",
+            "src": "contracts/stakeShibaV4.sol:109"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "activeStakers",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:111"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/stakeShibaV4.sol:112"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_struct(data)3884_storage)",
+            "src": "contracts/stakeShibaV4.sol:113"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "stakingAPYs",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:114"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "packages",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:115"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "updatedTime",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:116"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:117"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "totalClaimed",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:118"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "stakersLimit",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:119"
+          },
+          {
+            "contract": "stakeShibaV5",
+            "label": "_safeVotingToken",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:120"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IvotingTokens)3687": {
+            "label": "contract IvotingTokens"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_struct(data)3884_storage)": {
+            "label": "mapping(address => struct Staker.data)"
+          },
+          "t_struct(data)3884_storage": {
+            "label": "struct Staker.data",
+            "members": [
+              {
+                "label": "stakedAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "package",
+                "type": "t_uint256"
+              },
+              {
+                "label": "lastRewardTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          }
+        }
+      }
+    },
+    "fc2e73908970ca792724e4e99ff76ddf72f2ea6df204639fd28fb7821210e591": {
+      "address": "0xd30F9c9eB34056092dcBdf7a08699fcBc234A75e",
+      "txHash": "0x911941ee19be64de4bd7a132fce60dd6716c97d2e1a48660a1493655417cd40c",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "_token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:108"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "_votingToken",
+            "type": "t_contract(IvotingTokens)3687",
+            "src": "contracts/stakeShibaV4.sol:109"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "activeStakers",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:111"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/stakeShibaV4.sol:112"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_struct(data)3884_storage)",
+            "src": "contracts/stakeShibaV4.sol:113"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "stakingAPYs",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:114"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "packages",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:115"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "updatedTime",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:116"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:117"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "totalClaimed",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:118"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "stakersLimit",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:119"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "_safeVotingToken",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:120"
           }
         ],
         "types": {
