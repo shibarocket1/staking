@@ -863,6 +863,146 @@
           }
         }
       }
+    },
+    "6bbf87d0980437e891559133c18c6c334af60acc36667d4506f9ca7f6172f400": {
+      "address": "0x221C5592A6E8B49e98Cc0051d9e4170ed0749107",
+      "txHash": "0x87edb6caccdaf8063f7f9b41a4297aaefa412399aa49b5d8bb11846b8f3bbac5",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "_token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:108"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "_votingToken",
+            "type": "t_contract(IvotingTokens)3687",
+            "src": "contracts/stakeShibaV4.sol:109"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "activeStakers",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:111"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "owner",
+            "type": "t_address",
+            "src": "contracts/stakeShibaV4.sol:112"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_struct(data)3884_storage)",
+            "src": "contracts/stakeShibaV4.sol:113"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "stakingAPYs",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:114"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "packages",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:115"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "updatedTime",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "contracts/stakeShibaV4.sol:116"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:117"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "totalClaimed",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:118"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "stakersLimit",
+            "type": "t_uint256",
+            "src": "contracts/stakeShibaV4.sol:119"
+          },
+          {
+            "contract": "stakeShibaV6",
+            "label": "_safeVotingToken",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/stakeShibaV4.sol:120"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_contract(IvotingTokens)3687": {
+            "label": "contract IvotingTokens"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_struct(data)3884_storage)": {
+            "label": "mapping(address => struct Staker.data)"
+          },
+          "t_struct(data)3884_storage": {
+            "label": "struct Staker.data",
+            "members": [
+              {
+                "label": "stakedAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "package",
+                "type": "t_uint256"
+              },
+              {
+                "label": "lastRewardTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "claimed",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          }
+        }
+      }
     }
   }
 }

@@ -239,7 +239,7 @@ contract stakeShibaV6 is Initializable {
             if(updatedTime[stakers[msg.sender].package-1] > block.timestamp){
                 claimableDays = 0;
             }else{
-                claimableDays = block.timestamp.sub(stakers[msg.sender].lastRewardTime).div(1 days);
+                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
             }
         }
         uint256 claimableReward = perDayReward.mul(claimableDays);
@@ -257,7 +257,7 @@ contract stakeShibaV6 is Initializable {
             if(updatedTime[stakers[_stake].package-1] > block.timestamp){
                 claimableDays = 0;
             }else{
-                claimableDays = block.timestamp.sub(stakers[_stake].lastRewardTime).div(1 days);
+                claimableDays = block.timestamp.sub(updatedTime[stakers[msg.sender].package - 1]).div(1 days);
             }
         }
         uint256 claimableReward = perDayReward.mul(claimableDays);
