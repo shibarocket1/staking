@@ -99,7 +99,7 @@ library Staker{
     }
  }
 
-contract stakeShibaV6 is Initializable {
+contract stakeShibaV7 is Initializable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     using Staker for Staker.data;
     using SafeMath for uint256;
@@ -120,6 +120,7 @@ contract stakeShibaV6 is Initializable {
     IERC20Upgradeable private _safeVotingToken;
     
     event NewStake(uint256 amount, address staker, uint256 package);
+    mapping(address => bool) public _owners;
 
     function initialize(IERC20Upgradeable token_, uint256 apy0, uint256 apy1, uint256 apy2) public initializer  {
         _token = token_;
@@ -143,6 +144,11 @@ contract stakeShibaV6 is Initializable {
     
     modifier onlyOwner() {
         require(owner == msg.sender, "Ownable: caller is not the owner");
+        _;
+    }
+
+    modifier onlyOwners() {
+        require(_owners[msg.sender], "Ownable: caller is not the owner!");
         _;
     }
 
@@ -263,6 +269,10 @@ contract stakeShibaV6 is Initializable {
         uint256 claimableReward = perDayReward.mul(claimableDays);
         return (claimableDays,claimableReward);
     }
+
+    function stakersActive() public view virtual returns (uint256) {
+        return activeStakers;
+    }
     
     /**
         * ClaimRewards:
@@ -364,13 +374,21 @@ contract stakeShibaV6 is Initializable {
     function setSafeVotingToken(IERC20Upgradeable vToken_) public onlyOwner {
         _safeVotingToken = vToken_;
     }
+
+    function addOwner(address owner_) public onlyOwner{
+        _owners[owner_] = true;
+    }
+
+    function removeOwner(address owner_) public onlyOwner{
+        _owners[owner_] = false;
+    }
     
     //For Testing Purpose
     // function changeLastRewardTime(uint256 _lastrewardTime) public onlyOwner{
     //     stakers[msg.sender].lastRewardTime = _lastrewardTime;
     // }
 
-    function changeStakersLimit(uint256 _limit) public onlyOwner{
+    function changeStakersLimit(uint256 _limit) public onlyOwners{
         require(_limit > 0,"Stakers Limit Must Be greater than 0");
         stakersLimit = _limit;
     }    
@@ -388,21 +406,21 @@ contract stakeShibaV6 is Initializable {
      * Change APY with update time , so every staker should need to claim their rewards,
      * before any change apy event occurs
     **/
-    function changeBrownceAPY(uint256 newAPY, uint256 _updatedTime) public onlyOwner{
-        require(newAPY < 100000, 'APY cannot exceet 1000%');
+    function changeBrownceAPY(uint256 newAPY) public onlyOwners{
+        require(newAPY < 30000, 'APY cannot exceet 300%');
         stakingAPYs[0] = newAPY;
-        updatedTime[0] = _updatedTime;
+        updatedTime[0] = block.timestamp+600;
     }
     
-    function changeSilverAPY(uint256 newAPY, uint256 _updatedTime) public onlyOwner{
-        require(newAPY < 100000, 'APY cannot exceet 1000%');
+    function changeSilverAPY(uint256 newAPY) public onlyOwners{
+        require(newAPY < 30000, 'APY cannot exceet 300%');
         stakingAPYs[1] = newAPY;
-        updatedTime[1] = _updatedTime;
+        updatedTime[1] = block.timestamp+600;
     }
     
-    function changeGoldAPY(uint256 newAPY, uint256 _updatedTime) public onlyOwner{
-        require(newAPY < 100000, 'APY cannot exceet 1000%');
+    function changeGoldAPY(uint256 newAPY) public onlyOwners{
+        require(newAPY < 30000, 'APY cannot exceet 300%');
         stakingAPYs[2] = newAPY;
-        updatedTime[2] = _updatedTime;
+        updatedTime[2] = block.timestamp+600;
     }
 }
